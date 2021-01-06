@@ -5,17 +5,23 @@ import './App.css';
 
 import GuessedWords from './GuessedWords';
 import Congrats from './Congrats';
+import Input from './Input';
+import { getSecretWord } from './actions';
 
 class App extends Component {
   render() {
     return (
       <div className="container">
         <h1>Jotto App</h1>
-        <Congrats success={false} />
-        <GuessedWords guessedWords={[{ guessedWord: 'train', letterMatchCount: 3 }]} />
+        <Congrats success={this.props.success} />
+        <GuessedWords guessedWords={this.props.guessedWords} />
       </div>
     )
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { success: state.success, guessedWords: state.guessedWords, secretWord: state.secretWord }
+}
+
+export default connect(mapStateToProps, { getSecretWord })(App);
